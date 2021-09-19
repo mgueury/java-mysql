@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Secret 
+metadata:
+  name: java-secret 
+data:
+  JDBC_URL: amRiYzpteXNxbDovL215Y2x1c3Rlci5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsOjY0NDYvZGIxP3VzZXI9cm9vdCZwYXNzd29yZD1qYXZhTXlTUUwxCgo= 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-mysql-deployment
+spec:
+  selector:
+    matchLabels:
+      app: java-mysql 
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: java-mysql
+    spec:
+      containers:
+      - name: an
+        image: eu-frankfurt-1.ocir.io/fr03kzmuvhtf/marc/java-mysql:latest
+        envFrom:
+        - secretRef:
+            name: java-secret
+      imagePullSecrets:
+      - name: ocirsecret
+
